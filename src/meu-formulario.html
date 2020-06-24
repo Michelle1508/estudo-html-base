@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+ <head>
+     <meta charset="utf-8">
+     <meta name="keywords" content = "Dados, Curso, WEB">
+     <meta name="viewport" content="width-device-width, initial-scaled=1">
+     <title>Cadastro do Curso</title>
+
+     <link rel="stylesheet" type="text/css" href="../src/css/index.css">
+
+     <body>
+         <div>
+            <h1>Dados Cadastrais</h1>
+            <label>Nome</label>
+            <input type="text" placeholder="Digite seu nome" name="edtNome" id="edtNome">
+            <label>E-mail</label>
+            <input type="email" placeholder="Digite seu e-mail" name="edtEmail" id="edtEmail">
+         </div>
+         <div>
+            <button type="button" id="btnSalvar">Salvar</button>
+        </div>
+
+        <script>
+            var edtNome = document.getElementById("edtNome");
+            var edtEmail = document.getElementById("edtEmail");
+            var btnSalvar = document.getElementById("btnSalvar");
+
+            var btnSalvarClick = function(){
+                window.localStorage.setItem('edtNome',edtNome.value) 
+                window.localStorage.setItem('edtEmail',edtEmail.value)  
+                alert('Registro salvo com sucesso.')
+            }
+            btnSalvar.onclick = btnSalvarClick;
+
+            window.onload=function(){
+                edtNome.value = window.localStorage.getItem('edtNome')
+                edtEmail.value = window.localStorage.getItem('edtEmail')
+
+            }
+        </script>
+     </body>
+ </head>   
+</html>

@@ -1,0 +1,16 @@
+body{
+    width: 100%;
+  }
+  div{
+    background-color: red;
+    width: 50%;
+    height: 200px;
+  }
+
+  @media screen and (max-width: 400px){
+    div{
+      background-color: blue;
+      width: 100%;
+    }
+    
+  }

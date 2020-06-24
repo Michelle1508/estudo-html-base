@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+      <meta charset="utf-8">
+      <meta name="keywords" content="curso, HTML, Javascript, Frontend,Web">
+      <meta name="viewport" content="width=device-width, initial-scaled=1">
+      <title>Estudos na WEB</title>
+
+      <link rel="stylesheet" type="text/css" href="../src/css/index.css">
+    </head>
+    <body>
+      <h1>Hello World</h1>
+      <ul>
+        <li>
+          <a href="meu-formulario.html">Acessar a tela de cadastro via link</a>
+        </li>
+        <li>
+          <button type="button" id="btnCadastro">Ir cadastrar via botão</button>
+        </li>
+      </ul>
+
+    <script>
+      var btnCadastro = document.getElementById("btnCadastro");
+      var btnCadastroClick = function(){
+        window.location.href="meu-formulario.html"
+      }
+
+      btnCadastro.onclick = btnCadastroClick;
+    </script>
+    </body>
+</html>
