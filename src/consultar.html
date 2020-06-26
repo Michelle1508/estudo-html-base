@@ -2,37 +2,35 @@
 <html lang="pt-br">
     <head>
       <meta charset="utf-8">
-      <meta name="keywords" content="curso, HTML, Javascript, Frontend,Web">
+      <meta name="keywords" content="curso, HTML, Javascript, Frontend,Web, Consultar">
       <meta name="viewport" content="width=device-width, initial-scaled=1">
-      <title>Estudos na WEB</title>
+      <title>Consulta de Dados</title>
 
       <link rel="stylesheet" type="text/css" href="../src/css/index.css">
     </head>
     <body>
-      <h1>Página principal</h1>
+      <h1>Lista de Clientes</h1>
       <ul>
-        <li>
-          <button type="button" id="btnCadastro">Cadastrar</button>
-        </li>
-        <li>
-          <button type="button" id="btnConsulta">Consultar</button>
-        </li>
+        <ol>
+          <button type="button" id="btnCadastro">Inserir</button>
+          <button type="button" id="btnVoltar">Voltar</button>
+        </ol>
       </ul>
 
     <script>
       var btnCadastro = document.getElementById("btnCadastro");
-      var btnConsulta = document.getElementById("btnConsulta");
+      var btnVoltar = document.getElementById("btnVoltar");
 
       var btnCadastroClick = function(){
         window.location.href="cadastrar.html"
       }
 
-      var btnConsultaClick = function(){
-        window.location.href="consultar.html"
+      var btnVoltarClick = function(){
+          window.location.href="index.html"
       }
 
       btnCadastro.onclick = btnCadastroClick;
-      btnConsulta.onclick = btnConsultaClick;
+      btnVoltar.onclick = btnVoltarClick;
 
     </script>
     </body>

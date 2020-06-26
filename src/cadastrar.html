@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+ <head>
+     <meta charset="utf-8">
+     <meta name="viewport" content="width-device-width, initial-scaled=1">
+     <title>Cadastro de Clientes</title>
+
+     <link rel="stylesheet" type="text/css" href="../src/css/index.css">
+
+     <body>
+        <div>
+            <h1><center>Cadastro de Clientes</center></h1>
+            
+            <label>Nome</label>
+            <input type="text" placeholder="Digite seu nome" name="edtNome" id="edtNome">
+            <br><p>
+            <label>E-mail</label>
+            <input type="email" placeholder="Digite seu e-mail" name="edtEmail" id="edtEmail">
+            <br><p>
+            <label>Telefone Fixo</label>
+            <input type="text" placeholder="Digite seu telefone fixo" name="edtTelefone" id="edtTelefone" data-mask="(00) 0000-0000" data-mask-selectonfocus="true">
+        </div>
+  
+         <div>
+             <ul>
+                 <ol>
+                    <button type="button" id="btnSalvar">Salvar</button>
+                    <button type="button" id="btnVoltar">Voltar</button>
+                 </ol>
+            </ul>
+        </div>
+
+        <script>
+            var btnVoltar = document.getElementById("btnVoltar");
+            var btnSalvar = document.getElementById("btnSalvar");
+
+            var btnVoltarClick = function(){
+                window.location.href="./index.html"
+            }
+
+            var btnSalvarClick = function(){
+                var http = new XMLHttpRequest();
+
+                var edtNome = document.getElementById("edtNome");
+                var edtEmail = document.getElementById("edtEmail");
+                var edtTelefone = document.getElementById("edtTelefone");
+
+                var parametros = "name=" + edtNome.value;
+                parametros += "&email=" + edtEmail.value;
+                parametros += "&telefone=" + edtTelefone.value;
+
+                http.onreadystatechange = function(){
+                    if (http.readyState == 4){
+                        //if (http.status == 200){
+                            alert("Registro cadastrado com sucesso.")
+                        /*}
+                        else{
+                            alert("falha ao salvar registro.")    
+                        }*/
+                    }
+                }
+
+                http.open("post","http://192.168.0.114:3000/pessoas");
+                http.setRequestHeader("Content-type","application/x-www-form-urlencoded");                
+                http.send(parametros);
+            }
+
+            btnVoltar.onclick = btnVoltarClick;
+            btnSalvar.onclick = btnSalvarClick;
+        </script>
+
+     </body>
+ </head>   
+</html>

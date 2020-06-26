@@ -2,14 +2,14 @@ body{
     width: 100%;
   }
   div{
-    background-color: red;
+    background-color: white;
     width: 50%;
     height: 200px;
   }
 
   @media screen and (max-width: 400px){
     div{
-      background-color: blue;
+      background-color: white;
       width: 100%;
     }
     
