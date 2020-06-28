@@ -5,12 +5,12 @@
       <meta name="keywords" content="curso, HTML, Javascript, Frontend,Web, Consultar">
       <meta name="viewport" content="width=device-width, initial-scaled=1">
       <title>Consulta de Dados</title>
-
-      <link rel="stylesheet" type="text/css" href="../src/css/index.css">
     </head>
     <body>
       <h1>Lista de Clientes</h1>
-      <ul>
+      <div id="tClientes"></div>
+       
+       <ul>
         <ol>
           <button type="button" id="btnCadastro">Inserir</button>
           <button type="button" id="btnVoltar">Voltar</button>
@@ -18,6 +18,110 @@
       </ul>
 
     <script>
+
+      var Carregar = function(){
+        var http = new XMLHttpRequest();   
+        
+        http.onreadystatechange = function(){
+          
+          if ((http.status == 200) && (http.readyState == 4)) {
+            console.log(http.response);
+
+            var retorno = JSON.parse(http.response);
+
+            var container = document.getElementById("tClientes");
+            
+            var TabelaAnterior = container.firstChild;
+
+            if (TabelaAnterior){
+              TabelaAnterior.remove();
+            }
+
+            var tabela = document.createElement("table");
+
+            container.append(tabela);
+            
+            var header = document.createElement("thead");
+            tabela.append(header);
+
+            var colName = document.createElement("th");
+            var colEmail = document.createElement("th");
+            var colPhone = document.createElement("th");
+            var colAcao = document.createElement("th");
+
+            colName.textContent="Nome";
+            colEmail.textContent="E-mail";
+            colPhone.textContent="Telefone";
+            colAcao.textContent="Ações";
+
+            header.append(colName);
+            header.append(colEmail);
+            header.append(colPhone);
+            header.append(colAcao);
+
+            var tBody = document.createElement("tBody");
+
+            tabela.append(tBody);
+
+            for (let index = 0; index < retorno.length; index++) {
+              const element = retorno[index];
+
+              var tRow = document.createElement("tr");
+              var tRowName = document.createElement("td");
+              var tRowMail = document.createElement("td");
+              var tRowPhone = document.createElement("td");
+              var bRemover = document.createElement("button");
+              var bEditar = document.createElement("button");
+
+              bRemover.onclick = function(){
+                var httpRemover = new XMLHttpRequest();
+
+                httpRemover.onreadystatechange = function(){
+                
+                  if ((httpRemover.status == 200) && (httpRemover.readyState == 4)){
+                    var retorno = JSON.parse(httpRemover.responseText);
+                    Carregar();
+                    alert(retorno.message);
+                  }
+
+                }
+                
+                httpRemover.open("delete","http://192.168.0.114:3000/pessoas/"+element._id);
+                httpRemover.setRequestHeader("Content-type","application/x-www-form-urlencoded"); 
+                httpRemover.send();
+              }
+
+              bEditar.onclick = function(){
+                window.location.href="cadastrar.html?_id="+element._id;
+              }
+
+
+
+              tRowName.textContent = element.name;
+              tRowMail.textContent = element.email;
+              tRowPhone.textContent = element.telefone;
+              bRemover.textContent = "Excluir";
+              bEditar.textContent = "Editar";
+
+              tRow.append(tRowName);
+              tRow.append(tRowMail);
+              tRow.append(tRowPhone);
+              tRow.append(bRemover);
+              tRow.append(bEditar);
+
+              tBody.append(tRow);
+              
+            }
+          }
+        }
+
+        http.open("get","http://192.168.0.114:3000/pessoas");
+        http.setRequestHeader("Content-type","application/x-www-form-urlencoded");  
+        http.send();              
+
+      }
+
+     
       var btnCadastro = document.getElementById("btnCadastro");
       var btnVoltar = document.getElementById("btnVoltar");
 
@@ -31,6 +135,8 @@
 
       btnCadastro.onclick = btnCadastroClick;
       btnVoltar.onclick = btnVoltarClick;
+
+      Carregar();
 
     </script>
     </body>

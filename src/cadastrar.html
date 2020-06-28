@@ -33,6 +33,12 @@
         <script>
             var btnVoltar = document.getElementById("btnVoltar");
             var btnSalvar = document.getElementById("btnSalvar");
+            
+            var id = null;
+            
+            var edtNome = document.getElementById("edtNome");
+            var edtEmail = document.getElementById("edtEmail");
+            var edtTelefone = document.getElementById("edtTelefone");
 
             var btnVoltarClick = function(){
                 window.location.href="./index.html"
@@ -41,32 +47,72 @@
             var btnSalvarClick = function(){
                 var http = new XMLHttpRequest();
 
-                var edtNome = document.getElementById("edtNome");
-                var edtEmail = document.getElementById("edtEmail");
-                var edtTelefone = document.getElementById("edtTelefone");
-
                 var parametros = "name=" + edtNome.value;
                 parametros += "&email=" + edtEmail.value;
                 parametros += "&telefone=" + edtTelefone.value;
 
                 http.onreadystatechange = function(){
                     if (http.readyState == 4){
-                        //if (http.status == 200){
-                            alert("Registro cadastrado com sucesso.")
-                        /*}
+                        if (http.status == 200){
+
+                            var retorno = JSON.parse(http.responseText);
+                            console.log(retorno);
+                            alert(retorno.message);
+
+                            window.location.href="consultar.html";
+                        }
                         else{
-                            alert("falha ao salvar registro.")    
-                        }*/
+                            alert("falha ao salvar registro");
+                        }
                     }
                 }
-
-                http.open("post","http://192.168.0.114:3000/pessoas");
+                if (id == null){
+                    http.open("post","http://192.168.0.114:3000/pessoas");
+                }
+                else{
+                    parametros += "&_id=" + id;
+                    http.open("put","http://192.168.0.114:3000/pessoas");
+                }
+                
                 http.setRequestHeader("Content-type","application/x-www-form-urlencoded");                
                 http.send(parametros);
+            }
+            
+
+            var Carregar = function(){
+                console.log(window.location);
+
+                if (window.location.search != ""){
+
+                    var start = window.location.search.indexOf("=") + 1;
+                    var total = window.location.search.length;
+                    
+                    id = window.location.search.substring(start,total);
+                    
+                    var httpConsultar = new XMLHttpRequest();
+                    
+                    httpConsultar.onreadystatechange = function(){
+                        
+                        if ((httpConsultar.status == 200) && (httpConsultar.readyState == 4)){
+                            var retorno = JSON.parse(httpConsultar.response);
+
+                            edtNome.value = retorno.name;
+                            edtEmail.value = retorno.email;
+                            edtTelefone.value = retorno.telefone;
+                        }
+                    }
+
+                    httpConsultar.open("get","http://192.168.0.114:3000/pessoas/"+id);
+                    httpConsultar.setRequestHeader("Content-type","application/x-www-form-urlencoded");                
+                    httpConsultar.send();
+
+                }
             }
 
             btnVoltar.onclick = btnVoltarClick;
             btnSalvar.onclick = btnSalvarClick;
+
+            Carregar();
         </script>
 
      </body>
